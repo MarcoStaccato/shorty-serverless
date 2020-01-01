@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  AWS
+
+  Cassandra integration for shorty
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  ShortyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: cassandra_serverless/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /shorty
+            Method: get
+
+Outputs:
+  ShortyApi:
+    Description: "API Gateway endpoint URL for shorty app"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/shorty/"
+  ShortyFunction:
+    Description: "Shorty lambda function ARN"
+    Value: !GetAtt ShortyFunction.Arn
+  ShortyFunctionIamRole:
+    Description: "Implicit IAM Role created for shorty function"
+    Value: !GetAtt ShortyFunctionRole.Arn
