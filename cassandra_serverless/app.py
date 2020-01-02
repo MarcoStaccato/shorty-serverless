@@ -5,8 +5,16 @@ from cassandra.auth import PlainTextAuthProvider
 
 
 def lambda_handler(event, context):
-    hash = event['hash']
-    return handle_get(hash)
+    print(event["httpMethod"])
+    http_method = event["httpMethod"]
+    body = json.loads(event["body"])
+
+    if http_method == "GET":
+        hash = body['hash']
+        return handle_get(hash)
+    elif http_method == "POST":
+        url = body['url']
+        return handle_post(url)
 
 
 def handle_get(hash):

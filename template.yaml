@@ -15,7 +15,7 @@ Resources:
     Properties:
       CodeUri: cassandra_serverless/
       Handler: app.lambda_handler
-      Runtime: python3.6
+      Runtime: python3.7
       Events:
         HelloWorld:
           Type: Api
